@@ -20,10 +20,35 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer ({
+const upload = multer({
     storage: storage
 })
 
+// Combined endpoint for products with image upload
+app.post('/products', upload.single('file'), async (req, res) => {
+    try {
+        const productData = {
+            title: req.body.title,
+            description: req.body.description,
+            prix: req.body.prix,
+            stock: req.body.stock
+        };
+        
+        // If file was uploaded, add image field
+        if (req.file) {
+            productData.image = req.file.filename;
+        }
+        
+        const product = new Stocks(productData);
+        const result = await product.save();
+        res.status(201).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Keep these endpoints for backward compatibility
 app.post('/upload', upload.single('file'), (req, res) => {
     Stocks.create({image: req.file.filename})
     .then(result => res.json(result))
@@ -42,6 +67,15 @@ app.post('/', async(req, res) => {
     res.send(result);
 })
 
+app.get('/stocks', async(req, res) => {
+    try{
+        const stock = await Stocks.find();
+        res.status(200).json(stock);
+    } catch (error){
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 const port = 5000
 console.log(`running on port : ${port} `)
