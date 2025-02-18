@@ -59,11 +59,12 @@ const StockList = () => {
                             <thead>
                                 <tr>
                                     <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">image</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-300">title</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-300">prix</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-300">stock</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-300">description</th>
-
+                                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">title</th>
+                                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">prix</th>
+                                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">stock</th>
+                                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">description</th>
+                                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">delete</th>
+                                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-300">update</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-700">
@@ -73,18 +74,25 @@ const StockList = () => {
                                     user.description.toLowerCase().includes(searchTerm.toLowerCase())
                                 ).map((user) => (
                                     <tr key={user._id}>
-                                        <td className="whitespace-nowrap px-6 py-4 " id='prod-img'>
+                                        <td className="whitespace-nowrap px-1 py-4 " id='prod-img'>
                                         <img src={`http://localhost:5000/Images/${user.image}`} alt="Product" className="mt-4 w-10 h-full" />
                                         </td>
-                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">{user.title}</td>
-                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">{user.prix}</td>
-                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">{user.stock}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-300">{user.description}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-300">
+                                        <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-300">{user.title}</td>
+                                        <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-300">{user.prix}</td>
+                                        <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-300">{user.stock}</td>
+                                        <td className="px-1 py-4 text-sm text-gray-300">{user.description}</td>
+                                        <td className="px-1 py-4 text-sm text-gray-300">
                                             <button 
                                                 onClick={() => deleteMessage(user._id)}
                                                 className="bg-red-500 text-white px-2 py-1 rounded">
                                                 Delete
+                                            </button>
+                                        </td>
+                                        <td className="px-2 py-4 text-sm text-gray-300">
+                                            <button
+                                            onClick={90}
+                                            className="bg-teal-500 text-white px-1 py-1 rounded">
+                                                update
                                             </button>
                                         </td>
                                     </tr>

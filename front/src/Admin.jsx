@@ -14,33 +14,44 @@ function Admin() {
         stock: '' 
     });
 
+    const [err, seterr] = useState({});
+    
+    const validateForm = () => {
+        const newerr = {};
+        if (!formData.title.trim()) newerr.title = 'title is required'
+        if (formData.prix < 0) newerr.prix = 'prix most be positif'
+        if (!formData.description) newerr.description = 'description is required'
+        seterr(newerr);
+        return Object.keys(newerr).length === 0;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // Create form data with both file and text fields
-        const submitData = new FormData();
-        if (file) {
-            submitData.append('file', file);
-        }
-        submitData.append('title', formData.title);
-        submitData.append('description', formData.description);
-        submitData.append('prix', formData.prix);
-        submitData.append('stock', formData.stock);
-        
-        try {
-            const result = await axios.post('http://localhost:5000/products', submitData);
-            console.log("Success: ", result.data);
-            setFormData({
-                title: '',
-                description: '',
-                prix: '',
-                stock: ''
-            });
-            setFile(null);
-            fetchProducts(); // Refresh the product list after adding
-        } catch (error) {
-            console.error("Error:", error);
-        }
+        if (validateForm()) {
+            // Create form data with both file and text fields
+            const submitData = new FormData();
+            if (file) {
+                submitData.append('file', file);
+            }
+            submitData.append('title', formData.title);
+            submitData.append('description', formData.description);
+            submitData.append('prix', formData.prix);
+            submitData.append('stock', formData.stock);
+            
+            try {
+                const result = await axios.post('http://localhost:5000/products', submitData);
+                console.log("Success: ", result.data);
+                setFormData({
+                    title: '',
+                    description: '',
+                    prix: '',
+                    stock: ''
+                });
+                setFile(null);
+                fetchProducts(); // Refresh the product list after adding
+            } catch (error) {
+                console.error("Error:", error);
+            }
+    }
     };
 
     const handleChange = (e) => {
@@ -81,22 +92,24 @@ function Admin() {
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" 
+                    className={`${err.title ? 'outline-red-500' : ''}appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none`}
                     type="text" 
                     placeholder="Title" 
                     aria-label="Title"/>
                 </div>
+                    {err.title && <p className="text-red-500 text-sm mt-1">{err.title}</p>}
                 
                 <div className="flex items-center justify-center border-b border-teal-500 py-2">
                     <input
                     name="prix"
                     value={formData.prix}
                     onChange={handleChange}
-                    className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" 
+                    className={`${err.prix ? 'outline-red-500' : '' }appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none`}
                     type="text" 
                     placeholder="Prix" 
                     aria-label="Prix"/>
                 </div>
+                    {err.prix && <p className="text-red-500 text-sm mt-1">{err.prix}</p>}
 
                 <div className="flex items-center justify-center border-b border-teal-500 py-2">
                     <input 
@@ -115,10 +128,11 @@ function Admin() {
                     value={formData.description}
                     onChange={handleChange}
                     rows={2}
-                    className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" 
+                    className={`${err.description}appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none`}
                     placeholder="Description" 
                     aria-label="Description"/>
                 </div>
+                    {err.description && <p className="text-red-500 text-sm mt-1">{err.description}</p>}
                 
                 <div className="mt-4">
                     <label className="block mb-2 text-sm font-medium text-gray-400" htmlFor="file_input">
