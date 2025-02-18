@@ -139,10 +139,6 @@ function Admin() {
                     Submit Product
                 </button>
             </form>
-
-            {loading && <p>Loading products...</p>}
-            {error && <p>{error}</p>}
-            {image && <img src={`http://localhost:5000/Images/${image}`} alt="Product" className="mt-4 max-w-sm mx-auto" />}
         </>
     );
 }
