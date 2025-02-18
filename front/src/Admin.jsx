@@ -121,11 +121,11 @@ function Admin() {
                 </div>
                 
                 <div className="mt-4">
-                    <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="file_input">
+                    <label className="block mb-2 text-sm font-medium text-gray-400" htmlFor="file_input">
                         Product Image
                     </label>
                     <input 
-                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white p-2 focus:outline-none" 
+                        className="block w-full text-sm  text-gray-100 border border-teal-500 rounded-lg cursor-pointer bg-black p-3 focus:outline-none" 
                         id="file_input" 
                         type="file" 
                         onChange={e => setFile(e.target.files[0])}

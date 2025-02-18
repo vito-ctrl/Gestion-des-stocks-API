@@ -30,8 +30,8 @@ const StockList = () => {
 
     const deleteMessage = async (id) => {
         try {
-            await fetch(`http://localhost:4000/users/${id}`, { method: 'DELETE' });
-            setFile(users.filter(user => user._id !== id));
+            await fetch(`http://localhost:5000/stocks/${id}`, { method: 'DELETE' });
+            setFile(file.filter(user => user._id !== id));
         } catch (error) {
             console.error("Error deleting message:", error);
         }
@@ -44,11 +44,9 @@ const StockList = () => {
     if (error) {
         return <div className="text-red-500">Error: {error}</div>;
     }
-  
-    {/* {loading && <p>Loading products...</p>}
-    {error && <p>{error}</p>} */}
     return (
-        <div className="bg-black py-12">
+    
+    <div className="bg-black py-12">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-300 sm:text-4xl">

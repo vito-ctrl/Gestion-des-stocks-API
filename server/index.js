@@ -77,6 +77,19 @@ app.get('/stocks', async(req, res) => {
     }
 });
 
+app.delete('/stocks/:id', async(req, res) => {
+    try{
+        const result = await Stocks.findByIdAndDelete(req.params.id);
+        if (!result) {
+            return res.status(404).json({ error: "user not found" });
+        }
+        res.status(200).json({ message: "deleted"});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: error.message});
+    }
+});
+
 const port = 5000
 console.log(`running on port : ${port} `)
 
