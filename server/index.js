@@ -81,9 +81,28 @@ app.delete('/stocks/:id', async(req, res) => {
     try{
         const result = await Stocks.findByIdAndDelete(req.params.id);
         if (!result) {
-            return res.status(404).json({ error: "user not found" });
+            return res.status(404).json({ error: "product not found" });
         }
         res.status(200).json({ message: "deleted"});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: error.message});
+    }
+});
+
+
+
+app.put('/stocks/:id', async(req, res) => {
+    try{
+        const result = await Stocks.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true}
+        );
+        if (!result) {
+            return res.status(404).json({ error: "product not found" });
+        }
+        res.status(200).json({ message: "updated"});
     } catch (error) {
         console.error(error);
         res.status(500).json({error: error.message});
