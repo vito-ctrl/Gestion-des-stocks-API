@@ -26,6 +26,7 @@ const StockList = ({ onUpdateClick }) => {
         if (!updateFormData.title.trim()) newnari.title = 'title is required'
         if (updateFormData.prix < 0) newnari.prix = 'prix most be positif'
         if (!updateFormData.description) newnari.description = 'description is required'
+        if (updateFormData.stock.match(/^[a-zA-Z]+$/)) newnari.stock = 'stock have to be a number'
         setnari(newnari);
         return Object.keys(newnari).length === 0;
     }
@@ -159,6 +160,7 @@ const StockList = ({ onUpdateClick }) => {
                                                     className="flex items-center bg-black text-white border-b border-teal-500 px-2 py-1 rounded"
                                                 />
                                             ) : user.prix}
+                                            {nari.prix && <p className="text-red-500 text-sm mt-1">{nari.prix}</p>}
                                         </td>
                                         <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-300">
                                             {editingItem === user._id ? (
@@ -170,6 +172,7 @@ const StockList = ({ onUpdateClick }) => {
                                                     className="flex items-center bg-black text-white border-b border-teal-500 px-2 py-1 rounded"
                                                 />
                                             ) : user.stock}
+                                            {nari.stock && <p className="text-red-500 text-sm mt-1">{nari.stock}</p>}
                                         </td>
                                         <td className="px-1 py-4 text-sm text-gray-300">
                                             {editingItem === user._id ? (
@@ -181,6 +184,7 @@ const StockList = ({ onUpdateClick }) => {
                                                     className="flex items-center bg-black text-white border-b border-teal-500 px-2 py-1 rounded"
                                                 />
                                             ) : user.description}
+                                            {nari.description && <p className="text-red-500 text-sm mt-1">{nari.description}</p>}
                                         </td>
                                         <td className="px-1 py-4 text-sm text-gray-300">
                                             <button 

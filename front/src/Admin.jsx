@@ -21,6 +21,7 @@ function Admin() {
         if (!formData.title.trim()) newerr.title = 'title is required'
         if (formData.prix < 0) newerr.prix = 'prix most be positif'
         if (!formData.description) newerr.description = 'description is required'
+        if (formData.stock.match(/^[a-zA-Z]+$/)) newerr.stock = 'stock have to be a number'
         seterr(newerr);
         return Object.keys(newerr).length === 0;
     }
@@ -122,6 +123,7 @@ function Admin() {
                     placeholder="Stock" 
                     aria-label="Stock"/>
                 </div>
+                    {err.stock && <p className="text-red-500 text-sm mt-1">{err.stock}</p>}
 
                 <div className="flex items-center justify-center border-b border-teal-500 py-2">
                     <textarea
