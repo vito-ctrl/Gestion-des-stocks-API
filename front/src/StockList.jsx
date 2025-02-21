@@ -30,6 +30,11 @@ const StockList = ({ onUpdateClick }) => {
         setnari(newnari);
         return Object.keys(newnari).length === 0;
     }
+
+        function cancel(){
+            location.reload(); 
+     }
+    
   
     const fetchUsers = async () => {
       try {
@@ -64,32 +69,33 @@ const StockList = ({ onUpdateClick }) => {
     }
 
     const handleUpdateClick = (user) => {
-        setEditingItem(user._id);
-        setUpdateFormData({
-            title: user.title,
-            description: user.description,
-            prix: user.prix,
-            stock: user.stock
-        });
+            setEditingItem(user._id);
+            setUpdateFormData({
+                title: user.title,
+                prix: user.prix,
+                stock: user.stock,
+                description: user.description
+            });
     };
 
+
     const handleUpdateChange = (e) => {
-        setUpdateFormData({
-            ...updateFormData,
-            [e.target.name]: e.target.value
-        });
+            setUpdateFormData({
+                ...updateFormData,
+                [e.target.name]: e.target.value
+            });
     };
 
     const updateMessage = async (id) => {
         if(validateForm()){
             try {
-                    const response = await fetch(`http://localhost:5000/stocks/${id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(updateFormData)
-                    });
+                const response = await fetch(`http://localhost:5000/stocks/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updateFormData)
+                });
 
                 if (!response.ok) {
                     throw new Error('Failed to update');
@@ -101,8 +107,7 @@ const StockList = ({ onUpdateClick }) => {
                 console.error("Error updating message:", error);
             }
         }
-        
-    };
+    }
 
 
     return (
@@ -140,7 +145,7 @@ const StockList = ({ onUpdateClick }) => {
                                         </td>
                                         <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-300">
                                             {editingItem === user._id ? (
-                                                <input
+                                                 <input
                                                     type="text"
                                                     name="title"
                                                     value={updateFormData.title}
@@ -195,11 +200,19 @@ const StockList = ({ onUpdateClick }) => {
                                         </td>
                                         <td className="px-2 py-4 text-sm text-gray-300">
                                             {editingItem === user._id ? (
-                                                <button
-                                                    onClick={() => updateMessage(user._id)}
-                                                    className="bg-green-500 text-white px-1 py-1 rounded">
-                                                    Save
-                                                </button>
+                                                <>
+                                                    <button
+                                                        onClick={() => updateMessage(user._id)}
+                                                        className="bg-green-500 text-white px-2 py-1 rounded">
+                                                        Save
+                                                    </button>
+
+                                                    <button
+                                                        onClick={() => cancel()}
+                                                        className="bg-red-500 text-white px-2 m-2 py-1 rounded">
+                                                        cancel
+                                                    </button>
+                                                </>
                                             ) : (
                                                 <button
                                                     onClick={() => handleUpdateClick(user)}
