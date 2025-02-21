@@ -92,17 +92,21 @@ app.delete('/stocks/:id', async(req, res) => {
 
 
 
+// In index.js, modify the update endpoint
 app.put('/stocks/:id', async(req, res) => {
-    try{
+    try {
         const result = await Stocks.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {new: true}
+            { new: true }  // This ensures we get the updated document back
         );
         if (!result) {
             return res.status(404).json({ error: "product not found" });
         }
-        res.status(200).json({ message: "updated"});
+        res.status(200).json({ 
+            message: "updated",
+            updatedStock: result  // Return the updated document
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({error: error.message});
