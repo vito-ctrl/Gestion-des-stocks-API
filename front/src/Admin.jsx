@@ -10,7 +10,7 @@ function Admin() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        prix: '$ ',
+        prix: '',
         stock: '' 
     });
 
